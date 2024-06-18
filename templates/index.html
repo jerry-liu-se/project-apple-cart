@@ -1,30 +1,67 @@
 <!DOCTYPE html>
 <html lang='en' class=''>
+
 <head>
     <meta charset='UTF-8'>
     <title>SATURN DB</title>
     <link rel="stylesheet" href="../static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
 </head>
 
 <body onload="document.FormName.reset();">
 
-<div id="wapper">
+<div id="title">
+    <h1>SATURN DB</h1>
+</div>
+
+<div id="search_bar">
     <form role="search" id="form" method="post" autocomplete="off">
         <input type="text" id="query" name="textarea" placeholder="Search..." aria-label="Search through sysvars" value="{{ request.form['textarea'] }}">
         <button type="submit" name="submit" class="btn"><i class="fa fa-search"></i></button>
     </form>
 </div>
 
+
+<div id="data_wrapper" style="width: 80%; display: table;">
+
+    <div style="display: table-row">
+
+        <div id="sysvar_data" style="width: 55%; display: table-cell;">
+            <h2 id="sysvar_info">
+                {% for para in sysvar_info %}
+                <p id="sysvar_info_text">{{para}}</p>
+                {% endfor %}
+            </h2>
+        </div>
+
+        <div id="enum_data" style="width: 25%; display: table-cell;">
+            <h2 id="enum_info">
+                {% for para in enum_info %}
+                <p id="enum_info_text">{{para}}</p>
+                {% endfor %}
+            </h2>
+        </div>
+
+    </div>
+
+</div>
+
 <script>
-    $( function() {
+    $(function() {
         var availableTags = [{% for item in sysvars %} "{{item}}", {% endfor %}];
-        $("#query").autocomplete({source: availableTags});
+        $("#query").autocomplete({
+            source: availableTags
+        });
     });
+
 </script>
 
 </body>
+
 </html>

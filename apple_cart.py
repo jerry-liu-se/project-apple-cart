@@ -1,3 +1,4 @@
+import json
 from flask import Flask, request, render_template
 
 from _load_saturn_db import SATURN_DB, ENUM_DB
@@ -7,21 +8,24 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    """ main function point """
+
+    saturn_db_sysvars = list(SATURN_DB)
 
     if request.method == 'POST':
         sysvar = request.form.get('textarea')
         sysvar_data = SATURN_DB[sysvar]
+        sysvar_info = [f"{key} : {value}" for key, value in sysvar_data.items()]
 
         enum_data = []
         if "enumType" in sysvar_data:
-            enum_data = ENUM_DB[sysvar_data.get("enumType")]["enumEntries"]
+            for item in ENUM_DB[sysvar_data.get("enumType")]["enumEntries"]:
+                enum_data.append(f"{item['value']} : {item['item']}")
 
-        print(SATURN_DB[sysvar])
-
-    elif request.method == 'GET':
-        pass
-
-    saturn_db_sysvars = list(SATURN_DB)
+        return render_template('index.html',
+                               sysvars=saturn_db_sysvars,
+                               sysvar_info=sysvar_info,
+                               enum_info=enum_data)
 
     return render_template("index.html", sysvars=saturn_db_sysvars)
 

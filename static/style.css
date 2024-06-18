@@ -3,10 +3,26 @@ body {
     margin: 0;
 }
 
-div {
+#title {
+    display: inline-block;
+    font-family: "Titillium Web", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 25px;
+    width: 80%;
+    margin-top: 2%;
+    margin-bottom: 0%;
+    margin-left: 10%;
+    margin-right: 10%;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+#search_bar {
     display: inline-block;
     width: 80%;
-    margin-top: 10%;
+    margin-top: 0%;
     margin-left: 10%;
     margin-right: 10%;
     align-items: center;
@@ -24,7 +40,7 @@ form {
 
 input {
     all: unset;
-    font: 18px system-ui;
+    font: 20px system-ui;
     color: #fff;
     height: 100%;
     width: 100%;
@@ -34,15 +50,15 @@ input {
 
 button {
     all: unset;
-    color: #fff;
+    color: gray;
     cursor: pointer;
-    width: 5%;
-    height: 44px;
+    width: 4%;
+    height: 50px;
     text-align: center;
 }
 
 .btn:hover {
-    color: gray;
+    color: white;
 }
 
 .ui-autocomplete {
@@ -51,4 +67,39 @@ button {
     overflow-y: auto;
     overflow-x: hidden;
     padding-right: 20px;
+}
+
+#data_wrapper {
+    display: inline-block;
+    color: white;
+    width: 80%;
+    height: 50%;
+    margin-top: 1%;
+    margin-bottom: 5%;
+    margin-left: 10%;
+    margin-right: 10%;
+    align-items: center;
+
+}
+
+#sysvar_info {
+    font-family: "Titillium Web", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 18px;
+}
+
+#sysvar_info_text {
+    margin: 0
+}
+
+#enum_info {
+    font-family: "Titillium Web", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 18px;
+}
+
+#enum_info_text {
+    margin: 0
 }
