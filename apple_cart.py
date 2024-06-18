@@ -1,4 +1,3 @@
-import json
 from flask import Flask, request, render_template
 
 from _load_saturn_db import SATURN_DB, ENUM_DB
@@ -14,7 +13,14 @@ def index():
 
     if request.method == 'POST':
         sysvar = request.form.get('textarea')
-        sysvar_data = SATURN_DB[sysvar]
+
+        if sysvar not in SATURN_DB:
+            sysvar_data = {}
+            print("INVALID SYSVAR")
+
+        else:
+            sysvar_data = SATURN_DB[sysvar]
+
         sysvar_info = [f"{key} : {value}" for key, value in sysvar_data.items()]
 
         enum_data = []
