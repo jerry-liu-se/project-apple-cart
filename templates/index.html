@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html lang='en' class=''>
-
 <head>
     <meta charset='UTF-8'>
     <title>SATURN DB</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
 </head>
 
-<body>
-    
-    <div id="wapper">
-        <form role="search" id="form">
-            <input type="search" id="query" name="textarea" placeholder="Search..." aria-label="Search through sysvars">
-            <button class="btn"><i class="fa fa-search"></i></button>
-        </form>
-    </div>
+<body onload="document.FormName.reset();">
+
+<div id="wapper">
+    <form role="search" id="form" method="post" autocomplete="off">
+        <input type="text" id="query" name="textarea" placeholder="Search..." aria-label="Search through sysvars" value="{{ request.form['textarea'] }}">
+        <button type="submit" name="submit" class="btn"><i class="fa fa-search"></i></button>
+    </form>
+</div>
+
+<script>
+    $( function() {
+        var availableTags = [{% for item in sysvars %} "{{item}}", {% endfor %}];
+        $("#query").autocomplete({source: availableTags});
+    });
+</script>
 
 </body>
-
 </html>

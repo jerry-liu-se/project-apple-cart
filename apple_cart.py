@@ -1,42 +1,29 @@
-import json
-import pathlib
-import time
-from pathlib import Path
-
 from flask import Flask, request, render_template
 
+from _load_saturn_db import SATURN_DB, ENUM_DB
+
 app = Flask(__name__)
-
-
-def load_saturn_db(db_path: pathlib.Path, enum_path: pathlib.Path):
-    """ load the saturn db with enum files """
-
-    with open(enum_path, 'r') as f:
-        text = f.read()
-        enum_db = json.loads(text)["enums"]
-
-    with open(db_path, 'r') as f:
-        text = f.read()
-        saturn_db = json.loads(text)["sysvars"]
-
-    return saturn_db, enum_db
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
 
-    # db_path = r"C:\Users\SESA675699\CODE\Libra\saturn\test\lib_python\saturndb\json\saturn_sysvarDB.json"
-    # enum_path = r"C:\Users\SESA675699\CODE\Libra\saturn\test\lib_python\saturndb\json\saturn_enums.json"
-    # start_time = time.time()
-    # saturn_db, enum_db = load_saturn_db(Path(db_path), Path(enum_path))
-    # print(time.time() - start_time)
-
     if request.method == 'POST':
-        text = request.form.get('textarea')
-        print(text)
+        sysvar = request.form.get('textarea')
+        sysvar_data = SATURN_DB[sysvar]
 
-    return render_template("index.html")
+        enum_data = []
+        if "enumType" in sysvar_data:
+            enum_data = ENUM_DB[sysvar_data.get("enumType")]["enumEntries"]
 
+        print(SATURN_DB[sysvar])
+
+    elif request.method == 'GET':
+        pass
+
+    saturn_db_sysvars = list(SATURN_DB)
+
+    return render_template("index.html", sysvars=saturn_db_sysvars)
 
 
 if __name__ == '__main__':
