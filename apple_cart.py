@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
 
-from _load_saturn_db import SATURN_DB, ENUM_DB
+from load_saturn_db import SATURN_DB, ENUM_DB
 
 app = Flask(__name__)
 
