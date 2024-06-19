@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
 
-from load_saturn_db import SATURN_DB, ENUM_DB
+from load_saturn_db import load_saturn_db
 
 app = Flask(__name__)
 
@@ -9,23 +9,25 @@ app = Flask(__name__)
 def index():
     """ main function point """
 
-    saturn_db_sysvars = list(SATURN_DB)
+    saturn_db, enum_db = load_saturn_db()
+
+    saturn_db_sysvars = list(saturn_db)
 
     if request.method == 'POST':
         sysvar = request.form.get('textarea')
 
-        if sysvar not in SATURN_DB:
+        if sysvar not in saturn_db:
             sysvar_data = {}
             print("INVALID SYSVAR")
 
         else:
-            sysvar_data = SATURN_DB[sysvar]
+            sysvar_data = saturn_db[sysvar]
 
         sysvar_info = [f"{key} : {value}" for key, value in sysvar_data.items()]
 
         enum_data = []
         if "enumType" in sysvar_data:
-            for item in ENUM_DB[sysvar_data.get("enumType")]["enumEntries"]:
+            for item in enum_db[sysvar_data.get("enumType")]["enumEntries"]:
                 enum_data.append(f"{item['value']} : {item['item']}")
 
         return render_template('index.html',

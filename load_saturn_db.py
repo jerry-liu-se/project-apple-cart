@@ -2,16 +2,10 @@ import keyring
 import requests
 
 
-def get_pat():
-    """ get GitHub pat from wcc """
-
-    return keyring.get_password("GITHUB_PAT", "GITHUB_PAT_USER")
-
-
 def load_saturn_db():
     """ query saturn db files """
 
-    token = get_pat()
+    token = keyring.get_password("GITHUB_PAT", "GITHUB_PAT_USER")
     auth_header = {'Authorization': f'bearer {token}'}
 
     url = "https://raw.githubusercontent.com/SchneiderProsumer/scc_saturndb/main/json/saturn_sysvarDB.json"
@@ -31,6 +25,3 @@ def load_saturn_db():
         enum_db[item["name"]] = item
 
     return saturn_db, enum_db
-
-
-SATURN_DB, ENUM_DB = load_saturn_db()

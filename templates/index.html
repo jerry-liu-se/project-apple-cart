@@ -57,9 +57,17 @@
     $(function() {
         var availableTags = [{% for item in sysvars %} "{{item}}", {% endfor %}];
         $("input#query").autocomplete({
-            source: availableTags
+            source: availableTags,
+            select: function(event, ui) {
+
+                if(ui.item){
+                    $(event.target).val(ui.item.value);
+                }
+                $(event.target).closest('form').submit();
+    }
         });
     });
+
 </script>
 
 </body>
